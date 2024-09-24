@@ -7,9 +7,8 @@ import (
 )
 
 func main() {
-	a, err := app.New()
+	_, err := app.New()
 	if err != nil {
 		log.Fatalf("failed to init app: %s", err)
 	}
-	_ = a
 }
