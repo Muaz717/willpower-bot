@@ -48,14 +48,20 @@ func New() (*App, error) {
 
 	a.proc = processor.New(a.srv, a.log, a.ctx)
 
-	a.bot, err = a.proc.InitBot()
+	return a, nil
+}
+
+func (a *App) StartBot() error {
+
+	bot, err := a.proc.InitBot()
 	if err != nil {
 		a.log.Error("failed to init bot: ", sl.Err(err))
 
-		return nil, fmt.Errorf("failed to init bot: %w", err)
+		return fmt.Errorf("failed to init bot: %w", err)
 	}
+	a.bot = bot
 
-	return a, nil
+	return nil
 }
 
 func (a *App) SetupLogger() *slog.Logger {

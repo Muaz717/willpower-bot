@@ -1,0 +1,29 @@
+services:
+  willpower_bot:
+    build: ./
+    command: ./bot
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    environment:
+      - TELEGRAM_APITOKEN=7371157624:AAGXHElWaRZlhu4ZWkFOJvEqwe3QIZOKmyw
+      - CONFIG_PATH=config/config.yml
+      - DB_PASSWORD=qwerty
+    
+  db:
+    container_name: willpower_bot_db
+    image: postgres:latest
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=qwerty
+    ports:
+      - 5436:5432

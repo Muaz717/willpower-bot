@@ -7,7 +7,12 @@ import (
 )
 
 func main() {
-	_, err := app.New()
+	a, err := app.New()
+	if err != nil {
+		log.Fatalf("failed to init app: %s", err)
+	}
+
+	err = a.StartBot()
 	if err != nil {
 		log.Fatalf("failed to init app: %s", err)
 	}

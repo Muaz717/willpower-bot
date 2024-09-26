@@ -66,10 +66,18 @@ func (p *Processor) WorkoutStat(bot *tgbotapi.BotAPI, update tgbotapi.Update) er
 		result += fmt.Sprintf("Вес: %s\n\n", strconv.FormatFloat(workout.Weight, 'f', 1, 64))
 	}
 
-	msg.Text = result
-	_, err = bot.Send(msg)
-	if err != nil {
-		return fmt.Errorf("failed to send message: %w", err)
+	if result == "" {
+		msg.Text = "У вас еще нет добавленных тренировок"
+		_, err = bot.Send(msg)
+		if err != nil {
+			return fmt.Errorf("failed to send message: %w", err)
+		}
+	} else {
+		msg.Text = result
+		_, err = bot.Send(msg)
+		if err != nil {
+			return fmt.Errorf("failed to send message: %w", err)
+		}
 	}
 
 	return nil
@@ -83,6 +91,7 @@ var cancelWorkoutButton = tgbotapi.NewInlineKeyboardMarkup(
 
 func (p *Processor) AddWorkout(bot *tgbotapi.BotAPI, update tgbotapi.Update, newFSM *fsm.FSM) error {
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
+	msg.ReplyMarkup = GymKeyboard
 
 	var workout gym.Workout
 	input := update.Message.Text
@@ -169,10 +178,18 @@ func (p *Processor) PullupsStat(bot *tgbotapi.BotAPI, update tgbotapi.Update) er
 		result += fmt.Sprintf("Количество: %s\n\n", strconv.Itoa(pullups.Quantity))
 	}
 
-	msg.Text = result
-	_, err = bot.Send(msg)
-	if err != nil {
-		return fmt.Errorf("failed to send message: %w", err)
+	if result == "" {
+		msg.Text = "У вас еще нет добавленных подтягиваний"
+		_, err = bot.Send(msg)
+		if err != nil {
+			return fmt.Errorf("failed to send message: %w", err)
+		}
+	} else {
+		msg.Text = result
+		_, err = bot.Send(msg)
+		if err != nil {
+			return fmt.Errorf("failed to send message: %w", err)
+		}
 	}
 
 	return nil
@@ -186,6 +203,7 @@ var cancelPullupsButton = tgbotapi.NewInlineKeyboardMarkup(
 
 func (p *Processor) AddPullups(bot *tgbotapi.BotAPI, update tgbotapi.Update, newFSM *fsm.FSM) error {
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
+	msg.ReplyMarkup = GymKeyboard
 
 	var pullups gym.PullUps
 	input := update.Message.Text
