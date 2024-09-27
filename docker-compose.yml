@@ -1,5 +1,6 @@
 services:
   willpower_bot:
+    container_name: willpower_bot
     build: ./
     command: ./bot
     depends_on:
@@ -8,7 +9,7 @@ services:
         restart: true
     environment:
       - TELEGRAM_APITOKEN=7371157624:AAGXHElWaRZlhu4ZWkFOJvEqwe3QIZOKmyw
-      - CONFIG_PATH=config/config.yml
+      - CONFIG_PATH=config/comp.yml
       - DB_PASSWORD=qwerty
     
   db:

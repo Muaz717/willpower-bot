@@ -13,6 +13,7 @@ WORKDIR /root/
 
 COPY --from=builder /github.com/Muaz717/willpower-bot/.bin/bot .
 COPY --from=builder /github.com/Muaz717/willpower-bot/config/config.yml config/
+COPY --from=builder /github.com/Muaz717/willpower-bot/config/comp.yml config/
 COPY --from=builder /github.com/Muaz717/willpower-bot/.env .
 
 EXPOSE 80
